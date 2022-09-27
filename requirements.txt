@@ -1,5 +1,17 @@
-fuzzy_asteroids==2.0.0
-
-# TODO add project dependencies to this file, begin tracking once you
-# have downloaded new dependencies or use `pip freeze > requirements.txt`
-
+arcade==2.5.7
+attrs==22.1.0
+bar==0.2.1
+cffi==1.15.1
+chess==1.6.1
+fuzzy-asteroids==3.0.0
+mysql-connector-python==8.0.30
+numpy==1.20.1
+opencv-contrib-python==4.5.5.62
+Pillow==8.4.0
+pycparser==2.21
+pyglet==1.5.27
+pymunk==6.0.0
+pytiled-parser==0.9.4a3
+PyYAML==5.4.1
+Shapely==1.7.1
+tabulate==0.8.10
