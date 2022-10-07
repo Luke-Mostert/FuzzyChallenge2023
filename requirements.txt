@@ -5,6 +5,7 @@ cffi==1.15.1
 chess==1.6.1
 fuzzy-asteroids==3.0.0
 mysql-connector-python==8.0.30
+matplotlib==3.6.0
 numpy==1.20.1
 opencv-contrib-python==4.5.5.62
 Pillow==8.4.0
