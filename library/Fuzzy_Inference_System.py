@@ -4,3 +4,5 @@ import Fuzzy_Variables
 import Fuzzy_Rule_Set
 
 class FuzzyInferenceSystem:
+    def __init__(self):
+        pass
