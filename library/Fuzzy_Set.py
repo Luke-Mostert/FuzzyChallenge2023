@@ -14,6 +14,7 @@ class FuzzySet:
     #def draw(cls):
     #    pass
 
+
 class Triangle(FuzzySet):
     def __init__(self, name, a, b, c):
         self.name = name
@@ -24,9 +25,11 @@ class Triangle(FuzzySet):
 
     @classmethod
     def calcMembership(cls, x):
-        if cls.a <= x <= cls.b:
+        if cls.b == x:
+            return 1
+        elif cls.a <= x < cls.b:
             return (x - cls.a) / (cls.b - cls.a)
-        elif cls.b <= x <= cls.c:
+        elif cls.b < x <= cls.c:
             return (cls.c - x) / (cls.c - cls.b)
         else:
             return 0
@@ -64,6 +67,19 @@ class Gaussian(FuzzySet):
     @classmethod
     def calcMembership(cls, x):
         return pow(math.e, -pow(2, (x - cls.mean)) / 2 * pow(2, cls.std))
+
+
+class Singleton(FuzzySet):
+    def __init__(self, name, a):
+        self.name = name
+        self.a = a
+
+    @classmethod
+    def calcMembership(cls, x):
+        if x == cls.a:
+            return x
+        else:
+            return 0
 
 
 

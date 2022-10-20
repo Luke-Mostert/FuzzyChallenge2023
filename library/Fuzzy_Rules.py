@@ -3,12 +3,11 @@ class FuzzyRules:
         self.rule = rule
 
 
-class MandaniFuzzyRules(FuzzyRules):
+class MamdaniFuzzyRules(FuzzyRules):
     def __init__(self, rule):
         super().__init__(self, rule)
 
 
 class TSKFuzzyRules(FuzzyRules):
     def __init__(self, rule, output):
-        super().__init__(self, rule)
-        self.output = output
+

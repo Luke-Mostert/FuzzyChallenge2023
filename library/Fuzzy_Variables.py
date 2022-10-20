@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import Fuzzy_Set
 
+
 class FuzzyVariables:
     def __init__(self, name, universe, xMin, xMax, sets):
         self.name = name
