@@ -4,9 +4,8 @@ import Fuzzy_Set
 
 
 class FuzzyVariables:
-    def __init__(self, name, universe, xMin, xMax, sets):
+    def __init__(self, name, xMin, xMax, sets):
         self.name = name
-        self.universe = universe
         self.xMin = xMin
         self.xMax = xMax
         self.sets = sets
