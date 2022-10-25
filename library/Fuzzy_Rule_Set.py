@@ -7,7 +7,7 @@ class FuzzyRuleSet:
     def __init__(self, rules):
         self.rules = rules
 
-    @classmethod
-    def printRules(cls):
-        for i in range(len(cls.rules)):
-            print(cls.rules[i].rule)
+
+    def printRules(self):
+        for i in range(len(self.rules)):
+            print(self.rules[i].rule)

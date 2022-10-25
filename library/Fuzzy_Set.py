@@ -7,11 +7,10 @@ class FuzzySet:
     def __init__(self, name):
         self.name = name
 
-    @classmethod
-    def calcMembership(cls, x):
+    def calcMembership(self, x):
         pass
-    #@classmethod
-    #def draw(cls):
+    #
+    #def draw(self):
     #    pass
 
 
@@ -23,14 +22,13 @@ class Triangle(FuzzySet):
         self.c = c
         self.domain = c - a
 
-    @classmethod
-    def calcMembership(cls, x):
-        if cls.b == x:
+    def calcMembership(self, x):
+        if self.b == x:
             return 1
-        elif cls.a <= x < cls.b:
-            return (x - cls.a) / (cls.b - cls.a)
-        elif cls.b < x <= cls.c:
-            return (cls.c - x) / (cls.c - cls.b)
+        elif self.a <= x < self.b:
+            return (x - self.a) / (self.b - self.a)
+        elif self.b < x <= self.c:
+            return (self.c - x) / (self.c - self.b)
         else:
             return 0
 
@@ -44,17 +42,16 @@ class Trapezoid(FuzzySet):
         self.d = d
         self.domain = d - a
 
-    @classmethod
-    def calcMembership(cls, x):
-        if x < cls.a:
+    def calcMembership(self, x):
+        if x < self.a:
             return 0
-        elif cls.a <= x < cls.b:
-            return (x - cls.a) / (cls.b - cls.a)
-        elif cls.b <= x <= cls.c:
+        elif self.a <= x < self.b:
+            return (x - self.a) / (self.b - self.a)
+        elif self.b <= x <= self.c:
             return 1
-        elif cls.c < x <= cls.d:
-            return (cls.d - x) / (cls.d - cls.c)
-        elif cls.d < x:
+        elif self.c < x <= self.d:
+            return (self.d - x) / (self.d - self.c)
+        elif self.d < x:
             return 0
 
 
@@ -64,9 +61,8 @@ class Gaussian(FuzzySet):
         self.mean = mean
         self.std = std
 
-    @classmethod
-    def calcMembership(cls, x):
-        return pow(math.e, -pow(2, (x - cls.mean)) / 2 * pow(2, cls.std))
+    def calcMembership(self, x):
+        return pow(math.e, -pow(2, (x - self.mean)) / 2 * pow(2, self.std))
 
 
 class Singleton(FuzzySet):
@@ -74,9 +70,8 @@ class Singleton(FuzzySet):
         self.name = name
         self.a = a
 
-    @classmethod
-    def calcMembership(cls, x):
-        if x == cls.a:
+    def calcMembership(self, x):
+        if x == self.a:
             return x
         else:
             return 0
