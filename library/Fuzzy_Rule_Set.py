@@ -4,8 +4,11 @@ import Fuzzy_Rules
 
 
 class FuzzyRuleSet:
-    def __init__(self, rules):
+    def __init__(self, rules=[]):
         self.rules = rules
+
+    def __getitem__(self, i):
+        return self.rules[i]
 
 
     def printRules(self):

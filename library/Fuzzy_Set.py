@@ -32,6 +32,11 @@ class Triangle(FuzzySet):
         else:
             return 0
 
+    def draw(self):
+        plt.figure()
+        points = np.array([self.a, self.b], )
+        tri = plt.Polygon()
+
 
 class Trapezoid(FuzzySet):
     def __init__(self, name, a, b, c, d):
@@ -62,7 +67,7 @@ class Gaussian(FuzzySet):
         self.std = std
 
     def calcMembership(self, x):
-        return pow(math.e, -pow(2, (x - self.mean)) / 2 * pow(2, self.std))
+        return pow(math.e, -pow(2, (x - self.mean)) / 2 * pow(2, self.std)) #change
 
 
 class Singleton(FuzzySet):
