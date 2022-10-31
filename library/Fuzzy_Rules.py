@@ -12,14 +12,14 @@ class TSKFuzzyRules(FuzzyRules):
     def __init__(self, rule):
         self.rule = rule
         self.output = 1
-        self.variableName = ""
+        self.variableName = []
         self.antecedents = []
         temp = self.rule.split()
         for i in range(len(temp)):
-            if temp[i] == "If" or temp[i] == "if":
-                self.variableName = temp[i + 1]
+            if temp[i] == "If" or temp[i] == "if" or temp[i] == "and" or temp[i] == "or":
+                self.variableName.append(temp[i + 1])
                 i += 1
-            elif temp[i] == "is" or temp[i] == "and" or temp[i] == "or":
+            elif temp[i] == "is":
                 self.antecedents.append(temp[i + 1])
                 i += 1
             elif temp[i] == "then":
