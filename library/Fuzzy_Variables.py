@@ -10,7 +10,7 @@ class FuzzyVariables:
         self.xMax = xMax
         self.sets = sets
 
-    def draw(self):
+    def draw(self, title,xAxisName):
         arrX = np.linspace(self.xMin, self.xMax, (self.xMax - self.xMin) * 8)
         arrY = []
         for i in range(len(self.sets)):
@@ -18,5 +18,9 @@ class FuzzyVariables:
                 arrY.append(self.sets[i].calcMembership(arrX[j]))
             plt.plot(arrX, arrY, linewidth=1.0, label=self.sets[i].name)
             arrY = []
+        plt.title(title)
+        plt.xlabel(xAxisName)
+        plt.ylabel("Degree of Membership")
+        plt.legend(loc='center right')
         plt.show()
 

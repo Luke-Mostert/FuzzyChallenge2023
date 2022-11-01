@@ -53,9 +53,10 @@ class FuzzyInferenceSystem:
                             for l in range(len(self.ruleset.rules[i].antecedents)):
                                 if self.variables[j].sets[k].name == self.ruleset.rules[i].antecedents[l]:
                                     if m == 0:
+
                                         numerX.append(self.variables[j].sets[k].calcMembership(x) * self.ruleset.rules[i].output)
                                         denomX.append(self.variables[j].sets[k].calcMembership(x))
-                                    else:
+                                    elif m == 1:
                                         numerY.append(self.variables[j].sets[k].calcMembership(y))
                                         denomY.append(self.variables[j].sets[k].calcMembership(y))
         numerReturn = 0
