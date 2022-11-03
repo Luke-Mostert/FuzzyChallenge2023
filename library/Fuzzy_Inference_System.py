@@ -61,10 +61,10 @@ class FuzzyInferenceSystem:
                                         denomY.append(self.variables[j].sets[k].calcMembership(y))
         numerReturn = 0
         denomReturn = 0
-        print(*numerX , sep = ", ")
-        print(*numerY , sep = ", ")
-        print(*denomX, sep = ", ")
-        print(*denomY , sep = ", ")
+        #print(*numerX , sep = ", ")
+        #print(*numerY , sep = ", ")
+        #print(*denomX, sep = ", ")
+        #print(*denomY , sep = ", ")
 
         for i in range(len(numerX)):
             numerReturn += numerX[i] * numerY[i]
