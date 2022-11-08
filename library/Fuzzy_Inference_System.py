@@ -5,9 +5,16 @@ import Fuzzy_Rule_Set
 
 
 class FuzzyInferenceSystem:
-    def __init__(self, ruleset,variables=[]):
+    def __init__(self, ruleset, variables=[]):
         self.variables = variables
         self.ruleset = ruleset
+
+        #for i in range(len(ruleset.rules)):
+        #    for j in range(len(ruleset.rules[i].antecedents)):
+        #        self.dictAntecedent[ruleset.rules[i].antecedents[j]] = [0, 0]
+        #for i in range(len(self.variables)):
+        #    for j in range(len(self.variables[i].sets)):
+        #        for k in range(len(self.variables[i].sets[j].)):
 
     def TSKEvalOne(self, x,varName):
         numer = 0
@@ -49,6 +56,7 @@ class FuzzyInferenceSystem:
                             print("This value is out of range")
                             return -999999999
                         #Searching for the matching membership function that goes with the current rule
+                        #wont need these loops bc dictionary
                         for k in range(len(self.variables[j].sets)):
                             for l in range(len(self.ruleset.rules[i].antecedents)):
                                 if self.variables[j].sets[k].name == self.ruleset.rules[i].antecedents[l]:
