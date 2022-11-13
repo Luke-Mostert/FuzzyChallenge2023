@@ -27,7 +27,7 @@ triHotSet = Fuzzy_Set.Trapezoid("hot", 70, 80, 90, 90)
 tempVar = Fuzzy_Variables.FuzzyVariables("temp", 50, 90, [triColdSet, triRoomSet, triHotSet])
 
 #create fis with variables and rules
-fis = Fuzzy_Inference_System.FuzzyInferenceSystem(tempRuleSet, [tempVar] )
+#fis = Fuzzy_Inference_System.FuzzyInferenceSystem(tempRuleSet, [tempVar] )
 
 #call TSKfis with x and the variables we want to use
 #returnVal = fis.TSKEvalOne(75, "temp")
@@ -83,6 +83,10 @@ tempRuleSet = Fuzzy_Rule_Set.FuzzyRuleSet([ tempRuleGoodGreat,
 #create fis variables and rules
 fis = Fuzzy_Inference_System.FuzzyInferenceSystem(tempRuleSet, [serviceVar, foodVar])
 
+tippingDict = {
+    "service" : 3,
+    "food" : 7
+}
 #call TSK fis with x and the variables we want to use
-#returnVal = fis.TSKEvalTwo(3, 7, ["service", "food"])
+returnVal = fis.TSKEvalTwo(tippingDict)
 #print(returnVal)

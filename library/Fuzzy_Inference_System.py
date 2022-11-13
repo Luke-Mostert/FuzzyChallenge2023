@@ -8,13 +8,18 @@ class FuzzyInferenceSystem:
     def __init__(self, ruleset, variables=[]):
         self.variables = variables
         self.ruleset = ruleset
+        self.dictAntecedent = {}
+        #creating dictionary where key is rule antecedent and value is index to membership function
+        for i in range(len(ruleset.rules)):
+            for j in range(len(ruleset.rules[i].antecedents)):
+                self.dictAntecedent[ruleset.rules[i].antecedents[j]] = [0, 0]
+        for i in range(len(self.variables)):
+            for j in range(len(self.variables[i].sets)):
+                for k in range(len(self.variables[i].sets[j].name)):
+                    if self.variables[i].sets[j].name in self.dictAntecedent:
+                        self.dictAntecedent[self.variables[i].sets[j].name] = [i, j]
 
-        #for i in range(len(ruleset.rules)):
-        #    for j in range(len(ruleset.rules[i].antecedents)):
-        #        self.dictAntecedent[ruleset.rules[i].antecedents[j]] = [0, 0]
-        #for i in range(len(self.variables)):
-        #    for j in range(len(self.variables[i].sets)):
-        #        for k in range(len(self.variables[i].sets[j].)):
+
 
     def TSKEvalOne(self, x,varName):
         numer = 0
@@ -36,68 +41,49 @@ class FuzzyInferenceSystem:
 
         return numer / denom
 
-    def TSKEvalTwo(self, x, y, varName=[]):
-        numerX = []
-        denomX = []
-        numerY = []
-        denomY = []
+    #make the input a dictionary
+    def TSKEvalTwo(self, inputs={}):
+        #Creating a 2D list where rows are equal to the number of inputs
+        # Columns are equal to number of sets in variables to the power of antecedents in the rules.
+        rows = len(inputs)
+        cols = len(self.variables[0].sets) ** len(self.ruleset.rules[0].antecedents)
+        numer = [[0] * cols] * rows
+        denom = [[0] * cols] * rows
 
+        #Check if the values are in range of the variables
+        for b in range(len(inputs)):
+            for a in range(len(self.variables)):
+                if self.variables[a].name == list(inputs)[b]:
+                    # Check that the x value is in the range of the variable
+                    if self.variables[a].xMin > list(inputs.values())[b] or self.variables[a].xMax < list(inputs.values())[b]:
+                        print("This value is out of range")
+                        return -999999999
         #Loop for each rule
-        for m in range(len(varName)):
+        for m in range(len(inputs)):
             for i in range(len(self.ruleset.rules)):
-                #Loop to find the correct variable with the matching name
-                for j in range(len(self.variables)):
-                    if self.variables[j].name == varName[m]:
-                        #Check that the x value is in the range of the variable
-                        if self.variables[j].xMin > x or self.variables[j].xMax < x:
-                            print("This value is out of range")
-                            return -999999999
-                        if self.variables[j].xMin > y or self.variables[j].xMax < y:
-                            print("This value is out of range")
-                            return -999999999
-                        #Searching for the matching membership function that goes with the current rule
-                        #wont need these loops bc dictionary
-                        for k in range(len(self.variables[j].sets)):
-                            for l in range(len(self.ruleset.rules[i].antecedents)):
-                                if self.variables[j].sets[k].name == self.ruleset.rules[i].antecedents[l]:
-                                    if m == 0:
+                for k in range(len(self.ruleset.rules[i].antecedents)):
+                    #Searching for the matching membership function that goes with the current rule
+                    #Won't need these loops bc dictionary
+                    varsIndex = self.dictAntecedent[self.ruleset.rules[i].antecedents[k]][0]
+                    setIndex = self.dictAntecedent[self.ruleset.rules[i].antecedents[k]][1]
+                    currInput = list(inputs.values())[m]
+                    # We only want to multiply by the rules output once so do it to the first iteration
+                    if m == 0:
+                        numer[m][k] = self.variables[varsIndex].sets[setIndex].calcMembership(currInput) * self.ruleset.rules[i].output
+                    else:
+                        numer[m][k] = self.variables[varsIndex].sets[setIndex].calcMembership(currInput)
+                    denom[m][k] = self.variables[varsIndex].sets[setIndex].calcMembership(currInput)
+            print(m)
 
-                                        numerX.append(self.variables[j].sets[k].calcMembership(x) * self.ruleset.rules[i].output)
-                                        denomX.append(self.variables[j].sets[k].calcMembership(x))
-                                    elif m == 1:
-                                        numerY.append(self.variables[j].sets[k].calcMembership(y))
-                                        denomY.append(self.variables[j].sets[k].calcMembership(y))
         numerReturn = 0
         denomReturn = 0
-        #print(*numerX , sep = ", ")
-        #print(*numerY , sep = ", ")
-        #print(*denomX, sep = ", ")
-        #print(*denomY , sep = ", ")
 
-        for i in range(len(numerX)):
-            numerReturn += numerX[i] * numerY[i]
-            denomReturn += denomX[i] * denomY[i]
+        for i in range(cols):
+            numerTemp = 1
+            denomTemp = 1
+            for j in range(rows):
+                numerTemp *= numer[i][j]
+                denomTemp *= denom[i][j]
+            numerReturn += numerTemp
+            denomReturn += denomTemp
         return numerReturn / denomReturn
-    #{service : 20, food : 20}
-    #def TSKEval(self, inputs):
-    #    numer = []
-    #    denom = []
-    #    z = []
-    #    #Loop for each rule
-    #    for i in range(len(self.ruleset.rules)):
-    #        #Loop for each different variable in the rule
-    #        for j in range(self.ruleset.rules[i].variableName):
-    #            #Loop for each variable to find the matching one in the rule
-    #            for k in range(len(self.variables)):
-    #                #Checking if the two variable name matches whats in the rule
-    #                if self.variables[k].name == self.ruleset.rules[i].variableName[j]:
-    #                    #Loop for each membership function in the variable that was found
-    #                    for l in range(len(self.variables[k].sets)):
-    #                        #Loop for each antecedent in the current rule
-    #                        for m in range(len(self.ruleset.rules[i].antecedents)):
-    #                            #Checking if the antecedent and the current set name match
-    #                            if self.variables[k].sets[l].name == self.ruleset.rules[i].antecedents[m]:
-    #                                numer.append(self.variables[k].sets[l].calcMembership(inputs[self.ruleset.rules[i].variableName[j]]))
-    #                                denom.append(self.variables[k].sets[l].calcMembership(inputs[self.ruleset.rules[i].variableName[j]]))
-    #                                z.append(self.ruleset.rules[i].output)
-    #    return numer / denom
