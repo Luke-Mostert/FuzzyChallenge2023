@@ -19,37 +19,14 @@ class FuzzyInferenceSystem:
                     if self.variables[i].sets[j].name in self.dictAntecedent:
                         self.dictAntecedent[self.variables[i].sets[j].name] = [i, j]
 
-
-
-    def TSKEvalOne(self, x,varName):
-        numer = 0
-        denom = 0
-        #Loop for each rule
-        for i in range(len(self.ruleset.rules)):
-            #Loop to find the correct variable with the matching name
-            for j in range(len(self.variables)):
-                if self.variables[j].name == varName:
-                    #Check that the x value is in the range of the variable
-                    if self.variables[j].xMin > x or self.variables[j].xMax < x:
-                        print("This value is out of range")
-                        return -999999999
-                    #Searching for the matching membership function that goes with the current rule
-                    for k in range(len(self.variables[j].sets)):
-                        if self.variables[j].sets[k].name == self.ruleset.rules[i].antecedents[0]:
-                            numer += self.variables[j].sets[k].calcMembership(x) * self.ruleset.rules[i].output
-                            denom += self.variables[j].sets[k].calcMembership(x)
-
-        return numer / denom
-
     #make the input a dictionary
-    def TSKEvalTwo(self, inputs={}):
+    def TSKEval(self, inputs={}):
         #Creating a 2D list where rows are equal to the number of inputs
         # Columns are equal to number of sets in variables to the power of antecedents in the rules.
         rows = len(inputs)
         cols = len(self.variables[0].sets) ** len(self.ruleset.rules[0].antecedents)
-        numer = [[0] * cols] * rows
-        denom = [[0] * cols] * rows
-
+        numer = [ [0] * cols for _ in range(rows)]
+        denom = [ [0] * cols for _ in range(rows)]
         #Check if the values are in range of the variables
         for b in range(len(inputs)):
             for a in range(len(self.variables)):
@@ -67,23 +44,24 @@ class FuzzyInferenceSystem:
                     varsIndex = self.dictAntecedent[self.ruleset.rules[i].antecedents[k]][0]
                     setIndex = self.dictAntecedent[self.ruleset.rules[i].antecedents[k]][1]
                     currInput = list(inputs.values())[m]
+
                     # We only want to multiply by the rules output once so do it to the first iteration
-                    if m == 0:
-                        numer[m][k] = self.variables[varsIndex].sets[setIndex].calcMembership(currInput) * self.ruleset.rules[i].output
-                    else:
-                        numer[m][k] = self.variables[varsIndex].sets[setIndex].calcMembership(currInput)
-                    denom[m][k] = self.variables[varsIndex].sets[setIndex].calcMembership(currInput)
-            print(m)
+                    if self.variables[varsIndex].name == list(inputs)[m]:
+                        if m == 0:
+                            numer[m][i] = self.variables[varsIndex].sets[setIndex].calcMembership(currInput) * self.ruleset.rules[i].output
+                            #print(self.ruleset.rules[i].antecedents[k])
+                        else:
+                            numer[m][i] = self.variables[varsIndex].sets[setIndex].calcMembership(currInput)
+                        denom[m][i] = self.variables[varsIndex].sets[setIndex].calcMembership(currInput)
 
         numerReturn = 0
         denomReturn = 0
-
         for i in range(cols):
             numerTemp = 1
             denomTemp = 1
             for j in range(rows):
-                numerTemp *= numer[i][j]
-                denomTemp *= denom[i][j]
+                numerTemp *= numer[j][i]
+                denomTemp *= denom[j][i]
             numerReturn += numerTemp
             denomReturn += denomTemp
         return numerReturn / denomReturn
