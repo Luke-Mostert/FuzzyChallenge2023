@@ -27,10 +27,12 @@ triHotSet = Fuzzy_Set.Trapezoid("hot", 70, 80, 90, 90)
 tempVar = Fuzzy_Variables.FuzzyVariables("temp", 50, 90, [triColdSet, triRoomSet, triHotSet])
 
 #create fis with variables and rules
-#fis = Fuzzy_Inference_System.FuzzyInferenceSystem(tempRuleSet, [tempVar] )
+fis = Fuzzy_Inference_System.FuzzyInferenceSystem(tempRuleSet, [tempVar] )
+
+tempDict = { "temp" : 62}
 
 #call TSKfis with x and the variables we want to use
-#returnVal = fis.TSKEvalOne(75, "temp")
+#returnVal = fis.TSKEval(tempDict)
 #print(returnVal)
 
 #How to draw a variable, Give it a name and the x-axis name
@@ -68,7 +70,7 @@ serviceVar = Fuzzy_Variables.FuzzyVariables("service", 0, 10, [triGoodServiceSet
 foodVar = Fuzzy_Variables.FuzzyVariables("food", 0, 10, [triGoodFoodSet, triMidFoodSet, triBadFoodSet])
 
 #Print one of the variables.
-serviceVar.draw("Tipping Problem (Service)", "Service Quality")
+#serviceVar.draw("Tipping Problem (Service)", "Service Quality")
 
 #rulesets
 tempRuleSet = Fuzzy_Rule_Set.FuzzyRuleSet([ tempRuleGoodGreat,
@@ -84,9 +86,9 @@ tempRuleSet = Fuzzy_Rule_Set.FuzzyRuleSet([ tempRuleGoodGreat,
 fis = Fuzzy_Inference_System.FuzzyInferenceSystem(tempRuleSet, [serviceVar, foodVar])
 
 tippingDict = {
-    "service" : 3,
-    "food" : 7
+    "service" : 0,
+    "food" : 0
 }
 #call TSK fis with x and the variables we want to use
-returnVal = fis.TSKEvalTwo(tippingDict)
+#returnVal = fis.TSKEval(tippingDict)
 #print(returnVal)
