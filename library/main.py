@@ -89,6 +89,10 @@ tippingDict = {
     "service" : 0,
     "food" : 0
 }
+
+
+tempRuleSet.AddRule( Fuzzy_Rules.TSKFuzzyRules("If service is good and food is great then 9999"))
+tempRuleSet.PrintRules()
 #call TSK fis with x and the variables we want to use
 #returnVal = fis.TSKEval(tippingDict)
 #print(returnVal)

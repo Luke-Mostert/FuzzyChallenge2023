@@ -24,3 +24,13 @@ class FuzzyVariables:
         plt.legend(loc='center right')
         plt.show()
 
+    def AddMemFunction(self, toAdd):
+        self.sets.append(toAdd)
+        if toAdd.min < self.xMin:
+            self.xMin = toAdd.min
+        elif toAdd.max < self.xMax:
+            self.xMax = toAdd.max
+
+
+
+

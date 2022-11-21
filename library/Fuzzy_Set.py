@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 class FuzzySet:
     def __init__(self, name):
         self.name = name
+        self.min = 0
+        self.max = 0
 
     def calcMembership(self, x):
         pass
@@ -20,6 +22,8 @@ class Triangle(FuzzySet):
         self.a = a
         self.b = b
         self.c = c
+        self.min = a
+        self.max = c
         self.domain = c - a
 
     def calcMembership(self, x):
@@ -45,6 +49,8 @@ class Trapezoid(FuzzySet):
         self.b = b
         self.c = c
         self.d = d
+        self.min = a
+        self.max = d
         self.domain = d - a
 
     def calcMembership(self, x):
@@ -65,6 +71,7 @@ class Gaussian(FuzzySet):
         self.name = name
         self.mean = mean
         self.std = std
+        #min and max
 
     def calcMembership(self, x):
         return pow(math.e, -pow(2, (x - self.mean)) / 2 * pow(2, self.std)) #change
@@ -74,6 +81,8 @@ class Singleton(FuzzySet):
     def __init__(self, name, a):
         self.name = name
         self.a = a
+        self.min = a
+        self.max = a
 
     def calcMembership(self, x):
         if x == self.a:
