@@ -3,6 +3,7 @@ from Fuzzy_Inference_System import Fuzzy_Rule_Set
 from Fuzzy_Rule_Set import Fuzzy_Rules
 from Fuzzy_Inference_System import Fuzzy_Variables
 from Fuzzy_Variables import Fuzzy_Set
+import Fuzzy_TSK_Learning
 
 
 #This is how to create the full FIS and use the TSK eval with one antecedent
@@ -91,8 +92,11 @@ tippingDict = {
 }
 
 
-tempRuleSet.AddRule( Fuzzy_Rules.TSKFuzzyRules("If service is good and food is great then 9999"))
-tempRuleSet.PrintRules()
+#tempRuleSet.AddRule( Fuzzy_Rules.TSKFuzzyRules("If service is good and food is great then 9999"))
+#tempRuleSet.PrintRules()
 #call TSK fis with x and the variables we want to use
 #returnVal = fis.TSKEval(tippingDict)
 #print(returnVal)
+
+temp = Fuzzy_TSK_Learning.TSKLearning(75) #n
+temp.TSKLearn(300) #epochs
