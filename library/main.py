@@ -1,3 +1,5 @@
+import numpy as np
+
 import Fuzzy_Inference_System
 from Fuzzy_Inference_System import Fuzzy_Rule_Set
 from Fuzzy_Rule_Set import Fuzzy_Rules
@@ -98,5 +100,5 @@ tippingDict = {
 #returnVal = fis.TSKEval(tippingDict)
 #print(returnVal)
 
-temp = Fuzzy_TSK_Learning.TSKLearning(75) #n
-temp.TSKLearn(300) #epochs
+temp = Fuzzy_TSK_Learning.TSKLearning(50) #n
+temp.TSKLearn(100,np.sin) #epochs
