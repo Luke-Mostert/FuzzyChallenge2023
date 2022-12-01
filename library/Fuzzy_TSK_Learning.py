@@ -43,31 +43,39 @@ class TSKLearning:
             outputX[l] = l * ((2 * np.pi) / self.n)
             outputY[l] = wk[l] * memFunctions[l].calcMembership(l * ((2 * np.pi) / self.n))
         self.DrawError(epochs, error)
-        self.DrawFunction(outputX, outputY)
+        self.DrawFunction(outputX, outputY,compfunc)
+        print(error)
+
 
 
     #MSE Needs work D:
     def MSE(self, memFunctions,wk,xk,compfunc):
         result = 0
-        for i in range(len(xk)):
+        for i in range(1, self.n + 1):
+            ts = 0
             for k in range(len(memFunctions)):
-                coeff = (1/(2 * self.n))
-                diff = (memFunctions[k].calcMembership(xk[i]) * wk[k]) - compfunc(xk[i])
-                print(str((memFunctions[k].calcMembership(xk[i]) * wk[k])) + str(compfunc(xk[i])))
-                result += coeff * (diff * diff)
+                ts += (memFunctions[k].calcMembership(xk[i]) * wk[k])
+            coeff = (1/(2 * self.n))
+            diff = ts - compfunc(xk[i])
+            #print(diff)
+            result += coeff * np.multiply(diff, diff)
         return result
 
     def DrawError(self, epochs, error):
+        err = [x * 100 for x in error]
         x = np.arange(0, epochs, 1)
-        plt.plot(x, error)
-        plt.title("Error")
+        plt.plot(x, err)
+        plt.title("Percent Error")
+        plt.xlabel("Epochs")
+        plt.ylabel("Error (%)")
         plt.show()
 
-    def DrawFunction(self, outputX, outputY):
+    def DrawFunction(self, outputX, outputY, function):
         x = np.arange(0, 2 * np.pi, 0.1)  # start,stop,step
-        plt.plot(x, np.sin(x), label="Sin()")
+        plt.plot(x, function(x), label="Actual")
         plt.plot(outputX, outputY, label="Approximation")
         plt.grid(color='k', linestyle='-', linewidth=.3)
         plt.legend(loc='upper right')
+        plt.title("Actual vs Approx.")
         plt.show()
 

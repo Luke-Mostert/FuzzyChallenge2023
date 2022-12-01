@@ -73,7 +73,7 @@ serviceVar = Fuzzy_Variables.FuzzyVariables("service", 0, 10, [triGoodServiceSet
 foodVar = Fuzzy_Variables.FuzzyVariables("food", 0, 10, [triGoodFoodSet, triMidFoodSet, triBadFoodSet])
 
 #Print one of the variables.
-#serviceVar.draw("Tipping Problem (Service)", "Service Quality")
+
 
 #rulesets
 tempRuleSet = Fuzzy_Rule_Set.FuzzyRuleSet([ tempRuleGoodGreat,
@@ -88,17 +88,25 @@ tempRuleSet = Fuzzy_Rule_Set.FuzzyRuleSet([ tempRuleGoodGreat,
 #create fis variables and rules
 fis = Fuzzy_Inference_System.FuzzyInferenceSystem(tempRuleSet, [serviceVar, foodVar])
 
+
+#input values for TSK
 tippingDict = {
     "service" : 0,
     "food" : 0
 }
 
 
-#tempRuleSet.AddRule( Fuzzy_Rules.TSKFuzzyRules("If service is good and food is great then 9999"))
 #tempRuleSet.PrintRules()
 #call TSK fis with x and the variables we want to use
 #returnVal = fis.TSKEval(tippingDict)
 #print(returnVal)
+#serviceVar.draw("Tipping Problem (Service)", "Service Quality")
 
+def customFunction(x) -> int:
+    return (2 * np.sin(x) + (1/3 * np.cos(4 * x)))
+
+#n = the amount of rules
 temp = Fuzzy_TSK_Learning.TSKLearning(50) #n
-temp.TSKLearn(100,np.sin) #epochs
+temp.TSKLearn(1000, customFunction) #epochs
+
+
