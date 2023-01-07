@@ -102,3 +102,4 @@ tippingDict = {
 
 temp = Fuzzy_TSK_Learning.TSKLearning(50) #n
 temp.TSKLearn(100,np.sin) #epochs
+
