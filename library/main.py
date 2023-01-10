@@ -45,6 +45,7 @@ tempDict = { "temp" : 62}
 
 #Tipping Problem
 
+
 #rules
 tempRuleGoodGreat = Fuzzy_Rules.TSKFuzzyRules("If service is good and food is great then 25")
 tempRuleGoodAverage  = Fuzzy_Rules.TSKFuzzyRules("If service is good and food is average then 20")
